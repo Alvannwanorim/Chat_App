@@ -13,7 +13,7 @@ router.post("/login",
         check("password").isStrongPassword().withMessage('password is required'),
         check("email").isEmail().withMessage("Enter a valid email"),
         login)
-router.get("/find-one",findUser)
+router.get("/find/:userId",findUser)
 router.get("/find-all",findAllUsers)
 
 export default router
