@@ -4,11 +4,19 @@ import cors from "cors"
 import mongoose from "mongoose"
  dotenv.config()
 
+ import userRoute from './routes/userRoute.js'
+
 
  //Middleware
 const app = express()
 app.use(express.json())
 app.use(cors())
+app.use("/api/users", userRoute)
+
+app.get("",(req, res)=>{
+    // console.log(req);
+})
+
 
 
 const PORT = process.env.port || 4000
