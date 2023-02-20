@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Container, Nav, Navbar, Stack } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../context/AuthContextProvider'
 
 const NavBar = () => {
+//    const {user} = useContext(AuthContext)
   return (
     <Navbar bg='dark' className='mb-4' style={{height:'3.75rem'}}>
         <Container>
