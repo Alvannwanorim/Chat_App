@@ -5,6 +5,7 @@ const router = express.Router()
 
 router.post("/register",
         check("name").isString().withMessage('Name is required'),
+        check("name").isLength({min:3, max:200}).withMessage('Name is required with minimum or 3 characters'),
         check("password").isStrongPassword().withMessage('password is required'),
         check("email").isEmail().withMessage("Enter a valid email"),
         register)

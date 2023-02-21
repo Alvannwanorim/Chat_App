@@ -16,13 +16,14 @@ export const register = async(req,res) =>{
         const errors = validationResult(req)
 
         if (!errors.isEmpty()){
-            return res.status(400).json({errors: errors.array().map(err=> err.msg)})
+            const error = Array(errors.array().map(err=> err.msg).join(",") )
+            return res.status(400).json({message:error[0]})
         }
         const {name, email, password} = req.body 
 
         const user = await userModel.findOne({email});
         if(user){
-            return res.status(400).json({msg: "User already exists"})
+            return res.status(400).json({message: "User already exists"})
         }
 
         const newUser = new userModel({
@@ -35,7 +36,7 @@ export const register = async(req,res) =>{
         res.status(201).json({_id: newUser._id, name: newUser.name, email: newUser.email, token});
     } catch (err) {
         console.log(err);
-        res.status(500).json({msg:"Server error"})
+        res.status(500).json({message:"Server error"})
     }
         
 }
@@ -45,17 +46,17 @@ export const login = async (req, res)=>{
         const {email, password} = req.body
         const user = await userModel.findOne({email});
         if(!user){
-            return res.status(404).json({msg: "Not found"})
+            return res.status(404).json({message: "Not found"})
         }
         const isValidPassword = await bcrypt.compare(password, user.password)
         if(!isValidPassword){
-            return res.status(400).json({msg: "Invalid credentials"})
+            return res.status(400).json({message: "Invalid credentials"})
         }
         const token = createToken(user._id)
         res.status(201).json({_id: user._id, name: user.name, email: user.email, token});
     } catch (err) {
         console.log(err);
-        res.status(500).json({msg:"Server error"})
+        res.status(500).json({message:"Server error"})
     }
 }
 
@@ -64,12 +65,12 @@ export const findUser = async(req,res)=>{
         const user = await userModel.findById(req.params.usedId);
 
         if(!user){
-            return res.status(404).json({msg: "Not found"})
+            return res.status(404).json({message: "Not found"})
         }
         res.status(200).json({user})
     } catch (err) {
         sole.log(err);
-        res.status(500).json({msg:"Server error"})
+        res.status(500).json({message:"Server error"})
     }
 }
 
@@ -79,6 +80,6 @@ export const findAllUsers = async(req,res)=>{
         res.status(200).json({users})
     } catch (err) {
         sole.log(err);
-        res.status(500).json({msg:"Server error"})
+        res.status(500).json({message:"Server error"})
     }
 }
