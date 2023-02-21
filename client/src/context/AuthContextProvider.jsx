@@ -26,7 +26,7 @@ export const AuthContextProvider = ({children})=>{
         }
         localStorage.setItem("User", JSON.stringify(response))
         setUser(response)
-    },[])
+    },[registerInfo])
 
     const updateRegisterInfo = useCallback((info)=>{
         setRegisterInfo(info)
