@@ -5,6 +5,7 @@ import mongoose from "mongoose"
  dotenv.config()
 
  import userRoute from './routes/userRoute.js'
+ import chatRoute from './routes/chatRoute.js'
 
 
  //Middleware
@@ -12,6 +13,7 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 app.use("/api/users", userRoute)
+app.use("/api/chat", chatRoute)
 
 app.get("",(req, res)=>{
     // console.log(req);

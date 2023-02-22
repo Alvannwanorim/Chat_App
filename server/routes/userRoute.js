@@ -11,7 +11,6 @@ router.post("/register",
         register)
 
 router.post("/login",
-        check("password").isStrongPassword().withMessage('password is required'),
         check("email").isEmail().withMessage("Enter a valid email"),
         login)
 router.get("/find/:userId",findUser)
