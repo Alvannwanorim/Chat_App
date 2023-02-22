@@ -70,7 +70,7 @@ export const findUser = async(req,res)=>{
         }
         res.status(200).json({user})
     } catch (err) {
-        sole.log(err);
+        console.log(err);
         res.status(500).json({message:"Server error"})
     }
 }

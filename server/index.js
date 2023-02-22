@@ -6,6 +6,7 @@ import mongoose from "mongoose"
 
  import userRoute from './routes/userRoute.js'
  import chatRoute from './routes/chatRoute.js'
+ import messageRoute from './routes/messageRoute.js'
 
 
  //Middleware
@@ -14,6 +15,7 @@ app.use(express.json())
 app.use(cors())
 app.use("/api/users", userRoute)
 app.use("/api/chat", chatRoute)
+app.use("/api/message", messageRoute)
 
 app.get("",(req, res)=>{
     // console.log(req);
