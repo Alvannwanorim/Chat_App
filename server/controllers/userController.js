@@ -68,7 +68,7 @@ export const findUser = async(req,res)=>{
         if(!user){
             return res.status(404).json({message: "Not found"})
         }
-        res.status(200).json({user})
+        res.status(200).json(user)
     } catch (err) {
         console.log(err);
         res.status(500).json({message:"Server error"})
@@ -78,7 +78,8 @@ export const findUser = async(req,res)=>{
 export const findAllUsers = async(req,res)=>{
     try {
         const users = await userModel.find({});
-        res.status(200).json({users})
+        // console.log({users});
+        res.status(200).json(users)
     } catch (err) {
         sole.log(err);
         res.status(500).json({message:"Server error"})
