@@ -1,12 +1,12 @@
-import { createContext, useEffect, useState } from "react";
-import { baseUrl, getRequest } from "../utils/services";
+import { createContext, useCallback, useEffect, useState } from "react";
+import { baseUrl, getRequest, postRequest } from "../utils/services";
 export const ChatContext = createContext()
 
 export const ChatContextProvider = ({children, user})=>{
     const [userChats, setUserChats] = useState(null)
     const [isUserChatLoading, setIsUserChatLoading] = useState(false)
     const [userChatError, setUserChatError] = useState(null)
-    const [potentialChats, setPotentialChats] = useState(null)
+    const [potentialChats, setPotentialChats] = useState([])
     
     useEffect(()=>{
         const getUsers =async()=>{
@@ -15,22 +15,23 @@ export const ChatContextProvider = ({children, user})=>{
             console.log("error fetching users", response.error);
             return
         }
-        console.log(response);
-        // const pChats = response.find((u)=>{
-        //     let isChatCreated = false
-        //     if(user._id === u._id) return false
-        //     if(userChats){
-        //         isChatCreated = userChats?.some((chat)=>{
-        //             return chat.members[u] === u._id || chat.members[1] === u._id
-        //         })
-        //     }
-        //     return !isChatCreated
-        // })
+        // console.log(user);
+        const pChats= response.filter((u)=>{
+            let isChatCreated = false
+            if(user._id === u._id) return false
+            if(userChats){
+                isChatCreated = userChats?.some((chat)=>{
+                    return chat.members[0] === u._id || chat.members[1] === u._id
+                })
+            }
+            return !isChatCreated
+        })
 
-        setPotentialChats(response)
+        setPotentialChats(pChats)
         }
         getUsers()
     },[userChats])
+
     useEffect(() => {
       const getUserChats = async()=>{
         if(user?._id){
@@ -49,12 +50,23 @@ export const ChatContextProvider = ({children, user})=>{
       getUserChats()
     }, [user])
     
+    const createChats = useCallback(async(firstId, secondId)=>{
+        const response = await postRequest(`${baseUrl}/chat`, JSON.stringify({
+            firstId,secondId
+        }))
+        if (response.error){
+            console.log("Error creating chat", response);
+        }
+        console.log(response);
+        setUserChats((prev)=> [...prev, response])
+    },[])
     return (
         <ChatContext.Provider value={{
             userChats,
             isUserChatLoading,
             userChatError,
-            potentialChats
+            potentialChats,
+            createChats
         }}>
             {children}
         </ChatContext.Provider>
