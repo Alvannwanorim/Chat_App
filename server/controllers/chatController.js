@@ -24,7 +24,6 @@ export const createChat =async (req,res) =>{
 
 export const findAllUserChats = async (req,res)=>{
     const userId = req.params.userId
-    console.log("here");
 
    try {
     const chats = await chatModel.find({

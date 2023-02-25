@@ -61,7 +61,7 @@ export const login = async (req, res)=>{
 }
 
 export const findUser = async(req,res)=>{
-    console.log(req.params);
+    // console.log(req.params);
     try {
         const user = await userModel.findById(req.params.userId);
 

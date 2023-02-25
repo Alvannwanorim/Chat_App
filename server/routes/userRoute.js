@@ -14,6 +14,6 @@ router.post("/login",
         check("email").isEmail().withMessage("Enter a valid email"),
         login)
 router.get("/find/:userId",findUser)
-router.get("/find-all",findAllUsers)
+router.get("",findAllUsers)
 
 export default router
