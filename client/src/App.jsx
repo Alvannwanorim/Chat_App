@@ -8,6 +8,7 @@ import NavBar from "./components/NavBar"
 import { AuthContext } from "./context/AuthContextProvider"
 import { useContext } from "react"
 import { ChatContextProvider } from "./context/ChatContext"
+import PotentialChats from "./components/chat/PotentialChats"
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
 
   return (
     <ChatContextProvider user={user}>
+    <PotentialChats/>
     <NavBar/>
     <Container>
       <Routes>
