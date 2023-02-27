@@ -138,7 +138,8 @@ export const ChatContextProvider = ({children, user})=>{
             currentChat,
             messages,
             messageError,
-            isMessageLoading
+            isMessageLoading,
+            onlineUsers
         }}>
             {children}
         </ChatContext.Provider>

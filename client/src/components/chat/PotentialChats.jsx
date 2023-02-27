@@ -4,25 +4,8 @@ import { ChatContext } from '../../context/ChatContext'
 
 const PotentialChats = () => {
     // const {user} = useContext(AuthContext)
-    const {potentialChats, userChats, createChats} = useContext(ChatContext)
+    const {potentialChats, userChats, createChats,onlineUsers} = useContext(ChatContext)
     const user = JSON.parse(localStorage.getItem("User"))
-    // console.log("new user", user);
-    // let pChats = []
-    // if(potentialChats.length > 0){
-    //     pChats= potentialChats.filter((u)=>{
-    //         let isChatCreated = false
-    //         if(user._id.toString() === u._id.toString()) return false
-    //         if(userChats){
-    //             isChatCreated = userChats?.some((chat)=>{
-    //                 return chat.members[0].toString() === u._id.toString() || chat.members[1].toString() === u._id.toString()
-    //             })
-    //         }
-    //         return !isChatCreated
-    //     })
-        
-    // }
-    
-    // console.log(pChats.length);
   return (
     <>
     <div className='all-users'>
@@ -34,7 +17,7 @@ const PotentialChats = () => {
                 onClick={()=>createChats(user._id,u._id)}
                 >
                     {u.name}
-                    <div className="user-online"></div>
+                    <div className={onlineUsers?.some(user=> user.userId===u._id)? "user-online":""}></div>
                 </div>
             )
         })}
