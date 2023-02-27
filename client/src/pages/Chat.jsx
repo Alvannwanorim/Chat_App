@@ -28,7 +28,6 @@ const Chat = () => {
             )
           })}
         </Stack>
-        <p>hello</p>
         <ChatBox/>
       </Stack>
       )}
