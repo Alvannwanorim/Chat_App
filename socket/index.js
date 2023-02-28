@@ -16,10 +16,19 @@ const io = new Server({cors:{
             userId,
             socketId: socket.id
         })
-        console.log("online users", onlineUsers);
+        // console.log("online users", onlineUsers);
+
+        io.emit("getOnlineUsers", onlineUsers)
+    });
+
+    socket.on("disconnect", ()=>{
+        onlineUsers = onlineUsers.filter(user=> user.socketId !== socket.id)
+
+        io.emit("getOnlineUsers", onlineUsers)
     })
 
-    socket.emit("getOnlineUsers", onlineUsers)
+
+
 
  })
 
