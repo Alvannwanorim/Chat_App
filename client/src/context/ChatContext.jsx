@@ -29,6 +29,7 @@ export const ChatContextProvider = ({children, user})=>{
     },[user])
 
 
+    // Add online users
 
     useEffect(()=>{
         if(socket === null) return
@@ -42,9 +43,26 @@ export const ChatContextProvider = ({children, user})=>{
         }
     },[socket])
 
+    // send message 
     useEffect(()=>{
-        
-    },[socket])
+        if(socket === null) return
+        const recipientId = currentChat?.members?.find((id)=> id !== user._id)
+        socket.emit("sendMessage",{...newMessage, recipientId})
+    },[newMessage])
+
+    // Receive message 
+    useEffect(()=>{
+        if(socket === null) return
+        socket.on("getMessage",(res)=>{
+            if(currentChat?._id !== res.chatId) return
+            setMessages((prev)=>[...prev, res])
+        })
+
+        return ()=>{
+            socket.off("getMessage")
+        }
+
+    },[socket, currentChat])
 
 
 
@@ -118,6 +136,7 @@ export const ChatContextProvider = ({children, user})=>{
             senderId: sender._id,
             text: textMessage
         }))
+        // console.log(response);
         if(response.error){
             setSendMessageError(response)
         }

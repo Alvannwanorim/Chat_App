@@ -10,6 +10,7 @@ const ChatBox = () => {
     const {messages,currentChat,isMessageLoading, sendTextMessage} = useContext(ChatContext)
     const {recipientUser} = useFetchRecipientUser(currentChat, user)
     const [textMessage, setTextMessage] = useState("")
+    console.log(textMessage);
 
     if(!recipientUser) return (
         <p style={{textAlign:'center', width:'100%'}}>
