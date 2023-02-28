@@ -1,6 +1,7 @@
 import { createContext, useCallback, useEffect, useState } from "react";
 import { baseUrl, getRequest, postRequest } from "../utils/services";
 import { io } from "socket.io-client";
+
 export const ChatContext = createContext()
 
 export const ChatContextProvider = ({children, user})=>{
@@ -27,13 +28,25 @@ export const ChatContextProvider = ({children, user})=>{
         }
     },[user])
 
+
+
     useEffect(()=>{
         if(socket === null) return
         socket.emit("addNewUser", user?._id)
         socket.on("getOnlineUsers", (res)=>{
             setOnlineUsers(res)
         })
+
+        return () =>{
+            socket.off("getOnlineUsers")
+        }
     },[socket])
+
+    useEffect(()=>{
+        
+    },[socket])
+
+
 
     useEffect(()=>{
         const getUsers =async()=>{
