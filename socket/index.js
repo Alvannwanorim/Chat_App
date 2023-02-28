@@ -16,11 +16,15 @@ const io = new Server({cors:{
             userId,
             socketId: socket.id
         })
-        // console.log("online users", onlineUsers);
-
         io.emit("getOnlineUsers", onlineUsers)
     });
 
+    socket.on("sendMessage",(message)=>{
+        const user = onlineUsers.find((user)=> user.userId === message.recipientId)
+        if(user){
+            io.to(user.socketId).emit("getMessage", message)
+        }
+    })
     socket.on("disconnect", ()=>{
         onlineUsers = onlineUsers.filter(user=> user.socketId !== socket.id)
 
